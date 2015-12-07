@@ -18,8 +18,8 @@ Also "easydriver" stepper drivers and nema14/17 motors.
 
 
 Next on the Agenda
-	-Maybe play with some more extensive/adjustable menu structures 
+	Maybe play with some more extensive/adjustable menu structures 
 
-	-That could in turn allow for more some more cool things like loading preset shots stored in EEPROM
+	That could in turn allow for more some more cool things like loading preset shots stored in EEPROM
 
-	-The RTC (based on Martin Stienke's origional module we used for a wonderful ENCE361 project) could be extended to do lots of cool stuff, like task prioritisation, and even preemption.  
+	The RTC (based on Martin Stienke's origional module we used for a wonderful ENCE361 project) could be extended to do lots of cool stuff, like task prioritisation, and even preemption.  
