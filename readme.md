@@ -17,8 +17,8 @@ Also "easydriver" stepper drivers and nema14/17 motors.
 3D printed part files to be uploaded soon.
 
 
-Next on the Agenda:
-	-Maybe play with some more extensive/adjustable menu structures. 
+Next on the Agenda
+	-Maybe play with some more extensive/adjustable menu structures 
 
 	-That could in turn allow for more some more cool things like loading preset shots stored in EEPROM
 

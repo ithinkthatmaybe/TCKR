@@ -6,6 +6,14 @@
 
 int g_val = 0;
 
+void none(void)
+{
+	return;
+}
+
+void (*inc_callback_func)(void) = &none;
+void (*dec_callback_func)(void) = &none;
+
 #ifdef USE_INTTERUPT
 ISR(PCINT2_vect)
 {
@@ -20,7 +28,7 @@ ISR(PCINT2_vect)
 		encoder_update(state);
 	}
 	*/
-	
+
 	char state = (PIND>>3);
 	encoder_update(state);
 	_delay_ms(2);	
@@ -48,9 +56,19 @@ void encoder_update(char state)
 	if (state == 0x03)
 	{
 		if (state_last == 0x01)
+		{
 			g_val++;
+			#ifdef USE_CALLBACKS
+			inc_callback_func();
+			#endif
+		}
 		if (state_last == 0x02)
+		{
 			g_val--;
+			#ifdef USE_CALLBACKS
+			dec_callback_func();
+			#endif
+		}
 	}		
 	state_last = state;
 }
@@ -73,3 +91,18 @@ void encoder_set_val(int new_val)
 {
 	g_val = new_val;
 }
+
+#ifdef USE_CALLBACKS
+
+void encoder_register_increment_callback(void func(void))
+{
+	inc_callback_func = func;
+}
+
+void encoder_register_decrement_callback(void func(void))
+{
+	dec_callback_func = func;
+}
+
+#endif
+

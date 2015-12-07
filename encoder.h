@@ -35,6 +35,9 @@
 // Comment out to do so
 #define USE_INTTERUPT
 
+
+#define USE_CALLBACKS
+
 #define DEBOUNCE_PERIOD_US 200
 
 #include <avr/io.h>
@@ -45,6 +48,7 @@
 #include "RTC.h"
 
 
+
 void encoder_init(void);
 void encoder_update(char state);
 
@@ -53,6 +57,11 @@ int encoder_get_diff();
 
 int encoder_get_val();
 void encoder_set_val(int val);
+
+#ifdef USE_CALLBACKS
+void encoder_register_increment_callback(void func(void));
+void encoder_register_decrement_callback(void func(void));
+#endif
 
 
 #endif //ENCODER_H

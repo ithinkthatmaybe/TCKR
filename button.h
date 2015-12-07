@@ -15,6 +15,8 @@
 
 #include "RTC.h"
 
+#define USE_CALLBACKS
+
 #define DEBOUNCE_POLL_RATE_HZ 200 // During debounce poll button at x hertz
 #define DEBOUNCE_NUM 5 // number of consecutive reads for debouncing to be considered a successs
 
@@ -39,7 +41,10 @@ bool button_release_occured();
 bool button_up();
 bool button_down();
 
-
+#ifdef USE_CALLBACKS
+void button_register_press_callback(void func(void));
+void button_register_release_callback(void func(void));
+#endif
 
 
 #endif //BUTTON_H_

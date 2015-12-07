@@ -18,12 +18,19 @@ void debounce(void);
 RTC_task_handle_t debounce_task_handle;
 
 
+void button_none(void)
+{
+	return;
+}
+
+void (*press_callback)(void) = &button_none;
+void (*release_callback)(void) = &button_none;
+
 // Using Int0 isn't ideal, as this is the second highest priority interrupt
 // But the execution time and frequency of this ISR is actually very low
 // because most of the work is offloaded to the RTC.
 ISR(INT0_vect) //encoder button push
 {
-	PORTB ^= (1<<5);
 	button_int_disable(); // disable button interrupts until debouncing complete
 	RTC_start_task(debounce_task_handle);
 }
@@ -51,11 +58,17 @@ void debounce(void)
 		{
 			state = BUTTON_PUSHED;
 			pushed = BUTTON_PUSHED;
+			#ifdef USE_CALLBACKS
+			press_callback();
+			#endif
 		}
 		else
 		{
 			state = BUTTON_RELEASED;
 			released = BUTTON_RELEASED;
+			#ifdef USE_CALLBACKS
+			release_callback();
+			#endif
 		}
 		RTC_stop_task(debounce_task_handle);
 		button_int_enable();
@@ -137,4 +150,15 @@ bool button_up()
 bool button_down()
 {
 	return (state == BUTTON_PUSHED || state == BUTTON_DOWN);
+}
+
+
+void button_register_press_callback(void func(void))
+{
+	press_callback = func;
+}
+
+void button_register_release_callback(void func(void))
+{
+	release_callback = func;
 }
