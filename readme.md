@@ -1,4 +1,4 @@
-#PYphoto - For taking pretty motorised timelapse shots
+#TCKR - For taking pretty motorised timelapse shots
 ------------
 
 
